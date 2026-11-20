@@ -41,3 +41,11 @@ end-to-end cent-accurate financial settlement.
 Economic kernel and snapshot schema: LibreCodeCoop/producao-cooperativista
 PRs #284, #285, #286, #289 and #291. Kimai reader: PR #293 (draft), imported
 for further review, not treated as merged. Epic #275, issues #277–#279.
+
+## Synthetic read-only preview
+
+`php bin/synthetic-preview.php` prints a deterministic, traceable distribution
+preview from fabricated, preclassified facts. It does not read a real company,
+apply full financial rules or compute payable net amounts. Missing components
+are explicitly `null`; publication is always disabled. This is a **domain
+service and CLI demonstration**, not yet an authorized native web preview.

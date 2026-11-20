@@ -5,13 +5,19 @@ on:
 jobs:
   source-checks:
     runs-on: ubuntu-latest
-    container: php:8.3-cli
     steps:
       - uses: actions/checkout@v4
-      - name: Install BCMath
-        run: docker-php-ext-install bcmath
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: bcmath
+          coverage: none
+      - name: Install test dependencies
+        run: composer install --no-interaction --prefer-dist
       - name: PHP syntax
         run: |
           find Domain Providers Database tests -name '*.php' -print0 | xargs -0 -n1 php -l
       - name: Kimai synthetic source contract
         run: php tests/kimai-source-contract.php
+      - name: PHPUnit native unit checks
+        run: vendor/bin/phpunit -c phpunit.xml
