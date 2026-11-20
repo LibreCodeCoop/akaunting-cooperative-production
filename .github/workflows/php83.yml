@@ -1,0 +1,17 @@
+name: PHP 8.3 source checks
+on:
+  push:
+  pull_request:
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    container: php:8.3-cli
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install BCMath
+        run: docker-php-ext-install bcmath
+      - name: PHP syntax
+        run: |
+          find Domain Providers Database tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Kimai synthetic source contract
+        run: php tests/kimai-source-contract.php
